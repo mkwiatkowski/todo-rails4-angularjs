@@ -1,0 +1,9 @@
+.header
+  ul.nav.nav-pills.pull-right
+    li(class=active_if_current(root_path))
+      = link_to "Home", root_path
+    li(class=active_if_current(new_user_registration_path))
+      = link_to "Sign up", new_user_registration_path
+    li(class=active_if_current(new_user_session_path))
+      = link_to "Sign in", new_user_session_path
+  h3.text-muted Todo
