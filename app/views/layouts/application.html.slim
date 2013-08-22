@@ -3,11 +3,26 @@ html
   head
     = tag 'meta', 'charset' => 'utf-8'
     title Todo
+    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
 
   body
-    p.notice= notice
-    p.alert= alert
-    = yield
+    .container
+      .header
+        ul.nav.nav-pills.pull-right
+          li(class=active_if_current(root_path))
+            = link_to "Home", root_path
+          li(class=active_if_current(new_user_registration_path))
+            = link_to "Sign up", new_user_registration_path
+          li(class=active_if_current(new_user_session_path))
+            = link_to "Sign in", new_user_session_path
+        h3.text-muted Todo
+
+      - if notice.present?
+        p.alert.alert-success= notice
+      - if alert.present?
+        p.alert.alert-danger= alert
+
+      = yield
