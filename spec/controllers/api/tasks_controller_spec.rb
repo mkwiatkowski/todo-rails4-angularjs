@@ -62,5 +62,21 @@ describe Api::TasksController do
         response.should be_success
       end
     end
+
+    describe "#destroy" do
+      let(:delete_destroy) do
+        delete :destroy, task_list_id: task_list, id: task1.id
+      end
+
+      it "should remove the task from database" do
+        delete_destroy
+        expect { task1.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "should return 200 OK" do
+        delete_destroy
+        response.should be_success
+      end
+    end
   end
 end
