@@ -5,5 +5,7 @@ div(ng-app="todoApp" ng-controller="TodoListController" ng-init="init(#{@task_li
       span.input-group-btn
         button.btn.btn-primary.btn-lg(type="submit") add
   ul.list-group
-    li.list-group-item(ng-repeat="task in tasks")
-      ' {{task.description}}
+    li.list-group-item(ng-repeat="task in tasks" ng-class="{completed: task.completed}")
+      input(type="checkbox" ng-model="task.completed" ng-change="toggleTask(task)")
+      span.task-description
+        ' {{task.description}}

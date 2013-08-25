@@ -8,3 +8,6 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
     $scope.tasks.unshift(task)
     @taskService.create(task)
     $scope.taskDescription = ""
+
+  $scope.toggleTask = (task) ->
+    @taskService.update(task, {completed: task.completed})
