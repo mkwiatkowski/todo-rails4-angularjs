@@ -5,5 +5,5 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
 
   $scope.addTask = ->
     task = description: $scope.taskDescription
-    $scope.tasks.push(task)
+    $scope.tasks.unshift(task)
     @taskService.create(task)
