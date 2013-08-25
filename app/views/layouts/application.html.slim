@@ -3,8 +3,10 @@ html
   head
     = tag 'meta', 'charset' => 'utf-8'
     title Todo
-    = stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    = stylesheet_link_tag    "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"
+    = javascript_include_tag "//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-resource.min.js"
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
 
