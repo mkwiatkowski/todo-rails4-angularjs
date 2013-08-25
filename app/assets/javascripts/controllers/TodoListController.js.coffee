@@ -7,3 +7,4 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
     task = description: $scope.taskDescription
     $scope.tasks.unshift(task)
     @taskService.create(task)
+    $scope.taskDescription = ""
