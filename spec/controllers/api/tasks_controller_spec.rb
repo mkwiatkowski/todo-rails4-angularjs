@@ -63,6 +63,12 @@ describe Api::TasksController do
           task: {description: "New task", foobar: 1234}
         response.should be_ok
       end
+
+      it "should raise a validation error when description is too long" do
+        expect {
+          post :create, task_list_id: task_list.id, task: {description: "a"*300}
+        }.to raise_error(ActiveRecord::RecordInvalid)
+      end
     end
 
     describe "#update" do
