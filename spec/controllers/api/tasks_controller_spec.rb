@@ -24,7 +24,7 @@ describe Api::TasksController do
 
     describe "#create" do
       let(:post_create) do
-        post :create, task_list_id: task_list.id, description: "New task"
+        post :create, task_list_id: task_list.id, task: {description: "New task"}
       end
 
       it "should add the record to the database" do
@@ -42,12 +42,24 @@ describe Api::TasksController do
         post_create
         Task.order(:id).last.description.should == "New task"
       end
+
+      it "should raise ParameterMissing exception when task param is missing" do
+        expect {
+          post :create, task_list_id: task_list.id
+        }.to raise_error(ActionController::ParameterMissing)
+      end
+
+      it "should ignore unknown parameters" do
+        post :create, task_list_id: task_list.id,
+          task: {description: "New task", foobar: 1234}
+        response.should be_ok
+      end
     end
 
     describe "#update" do
       let(:patch_update) do
-        patch :update, task_list_id: task_list, id: task1.id,
-          description: "New description", priority: 1, completed: true
+        patch :update, task_list_id: task_list.id, id: task1.id,
+          task: {description: "New description", priority: 1, completed: true}
       end
 
       it "should update passed parameters of the given task" do
