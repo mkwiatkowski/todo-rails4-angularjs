@@ -1,4 +1,4 @@
-div(ng-app="todoApp" ng-controller="TodoListController" ng-init="init(#{@task_list.id})")
+.ng-cloak(ng-app="todoApp" ng-controller="TodoListController" ng-init="init(#{@task_list.id})")
   form#new_task(ng-submit="addTask()")
     .input-group
       input.form-control.input-lg(type="text" autofocus="autofocus" placeholder="Task description" maxlength="255" ng-model="taskDescription")
