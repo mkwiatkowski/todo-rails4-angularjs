@@ -1,4 +1,6 @@
-class Api::TasksController < ApplicationController
+class Api::TasksController < Api::BaseController
+  before_action :check_owner
+
   def index
     render json: task_list.tasks
   end
@@ -20,14 +22,18 @@ class Api::TasksController < ApplicationController
 
   private
   def task_list
-    TaskList.find(params[:task_list_id])
+    @task_list ||= TaskList.find(params[:task_list_id])
   end
 
   def task
-    task_list.tasks.find(params[:id])
+    @task ||= task_list.tasks.find(params[:id])
   end
 
   def safe_params
     params.require(:task).permit(:description, :priority, :completed)
+  end
+
+  def check_owner
+    permission_denied if current_user.task_list != task_list
   end
 end

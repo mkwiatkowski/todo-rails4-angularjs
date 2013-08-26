@@ -2,18 +2,20 @@ require 'spec_helper'
 
 describe Api::TasksController do
   context "for a logged-in user with two tasks" do
-    let(:task_list) { create(:task_list, :with_tasks) }
+    let(:user) { create(:user) }
+    let(:task_list) { user.task_list }
     let(:task1) { task_list.tasks[0] }
     let(:task2) { task_list.tasks[1] }
-    let(:user) { task_list.owner }
 
-    before { sign_in(user) }
+    before do
+      2.times { create(:task, list: task_list) }
+      sign_in(user)
+    end
 
     describe "#index" do
       it "should return json of those tasks" do
         get :index, task_list_id: task_list.id
-        tasks = JSON.parse(response.body)
-        tasks.should == [
+        json_response.should == [
           {'id' => task1.id, 'description' => task1.description,
             'priority' => nil, 'due_date' => nil, 'completed' => false},
           {'id' => task2.id, 'description' => task2.description,
@@ -25,6 +27,13 @@ describe Api::TasksController do
         expect {
           get :index, task_list_id: 0
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "should return HTTP 401 Unauthorized when trying to get tasks for list of another user" do
+        other_task_list = create(:task_list)
+        get :index, task_list_id: other_task_list.id
+        response.status.should == 401
+        json_response.should == {'error' => 'unauthorized'}
       end
     end
 
@@ -75,6 +84,13 @@ describe Api::TasksController do
           post :create, task_list_id: task_list.id, task: {description: "a"*300}
         }.to raise_error(ActiveRecord::RecordInvalid)
       end
+
+      it "should return HTTP 401 Unauthorized when trying to create task in a list of another user" do
+        other_task_list = create(:task_list)
+        post :create, task_list_id: other_task_list.id, task: {description: "Not mine"}
+        response.status.should == 401
+        json_response.should == {'error' => 'unauthorized'}
+      end
     end
 
     describe "#update" do
@@ -101,6 +117,14 @@ describe Api::TasksController do
             task: {description: "New description", priority: 1, completed: true}
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
+
+      it "should return HTTP 401 Unauthorized when trying to update task of another user" do
+        other_task = create(:task)
+        patch :update, task_list_id: other_task.list.id, id: other_task.id,
+          task: {description: "New description", priority: 1, completed: true}
+        response.status.should == 401
+        json_response.should == {'error' => 'unauthorized'}
+      end
     end
 
     describe "#destroy" do
@@ -120,8 +144,15 @@ describe Api::TasksController do
 
       it "should raise RecordNotFound when trying to destroy non-existent task" do
         expect {
-          delete :destroy, task_list_id: task_list, id: 0
+          delete :destroy, task_list_id: task_list.id, id: 0
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "should return HTTP 401 Unauthorized when trying to delete task of another user" do
+        other_task = create(:task)
+        delete :destroy, task_list_id: other_task.list.id, id: other_task.id
+        response.status.should == 401
+        json_response.should == {'error' => 'unauthorized'}
       end
     end
   end
