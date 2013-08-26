@@ -20,6 +20,12 @@ describe Api::TasksController do
             'priority' => nil, 'due_date' => nil, 'completed' => false}
         ]
       end
+
+      it "should raise RecordNotFound when trying to get tasks for non-existent list" do
+        expect {
+          get :index, task_list_id: 0
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
 
     describe "#create" do
@@ -88,6 +94,13 @@ describe Api::TasksController do
         patch_update
         response.should be_success
       end
+
+      it "should raise RecordNotFound when trying to update non-existent task" do
+        expect {
+          patch :update, task_list_id: task_list.id, id: 0,
+            task: {description: "New description", priority: 1, completed: true}
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
 
     describe "#destroy" do
@@ -103,6 +116,12 @@ describe Api::TasksController do
       it "should return 200 OK" do
         delete_destroy
         response.should be_success
+      end
+
+      it "should raise RecordNotFound when trying to destroy non-existent task" do
+        expect {
+          delete :destroy, task_list_id: task_list, id: 0
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

@@ -20,11 +20,11 @@ class Api::TasksController < ApplicationController
 
   private
   def task_list
-    TaskList.find_by_id(params[:task_list_id])
+    TaskList.find(params[:task_list_id])
   end
 
   def task
-    task_list.tasks.find_by_id(params[:id])
+    task_list.tasks.find(params[:id])
   end
 
   def safe_params
