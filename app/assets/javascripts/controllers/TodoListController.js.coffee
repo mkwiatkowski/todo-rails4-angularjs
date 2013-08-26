@@ -8,6 +8,10 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
     $scope.tasks.unshift(task)
     $scope.taskDescription = ""
 
+  $scope.deleteTask = (task) ->
+    @taskService.delete(task)
+    $scope.tasks.splice($scope.tasks.indexOf(task), 1)
+
   $scope.toggleTask = (task) ->
     @taskService.update(task, completed: task.completed)
 

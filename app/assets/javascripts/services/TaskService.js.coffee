@@ -15,6 +15,9 @@ angular.module('todoApp').factory 'Task', ($resource, $http) ->
         attrs.id = task.id
       attrs
 
+    delete: (task) ->
+      new @service().$delete({id: task.id})
+
     update: (task, attrs) ->
       new @service(task: attrs).$update({id: task.id})
 

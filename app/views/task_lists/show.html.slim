@@ -9,3 +9,5 @@
       input(type="checkbox" ng-model="task.completed" ng-change="toggleTask(task)")
       .task-description
         editablespan(model="task.description" on-ready="taskEdited(task)" input-class="form-control")
+      button.btn.btn-danger.btn-xs.pull-right(type="button" ng-click="deleteTask(task)")
+        span.glyphicon.glyphicon-ban-circle
