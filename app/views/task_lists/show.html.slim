@@ -7,5 +7,5 @@ div(ng-app="todoApp" ng-controller="TodoListController" ng-init="init(#{@task_li
   ul.list-group
     li.list-group-item(ng-repeat="task in tasks" ng-class="{completed: task.completed}")
       input(type="checkbox" ng-model="task.completed" ng-change="toggleTask(task)")
-      span.task-description
-        ' {{task.description}}
+      .task-description
+        editablespan(model="task.description" on-ready="taskEdited(task)" input-class="form-control")
