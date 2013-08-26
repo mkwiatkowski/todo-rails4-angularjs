@@ -38,6 +38,15 @@ describe Api::TasksController do
         response.should be_success
       end
 
+      it "should return json of the just created record" do
+        post_create
+        json_response["id"].should == be_an(Integer)
+        json_response["completed"].should == false
+        json_response["description"].should == "New task"
+        json_response["due_date"].should == nil
+        json_response["priority"].should == nil
+      end
+
       it "should preserve passed parameters" do
         post_create
         Task.order(:id).last.description.should == "New task"
@@ -90,5 +99,11 @@ describe Api::TasksController do
         response.should be_success
       end
     end
+  end
+
+  private
+
+  def json_response
+    @json_response ||= JSON.parse(response.body)
   end
 end

@@ -4,8 +4,8 @@ class Api::TasksController < ApplicationController
   end
 
   def create
-    task_list.tasks.create!(safe_params)
-    render nothing: true
+    task = task_list.tasks.create!(safe_params)
+    render json: task
   end
 
   def update

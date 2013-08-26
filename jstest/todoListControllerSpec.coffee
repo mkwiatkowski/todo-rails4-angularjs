@@ -2,7 +2,7 @@ describe 'TodoListController', ->
   class Task
     constructor: (_) ->
     all: -> []
-    create: ->
+    create: (t) -> t
 
   beforeEach ->
     module('todoApp')

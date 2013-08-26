@@ -11,7 +11,9 @@ angular.module('todoApp').factory 'Task', ($resource, $http) ->
       defaults.patch['Content-Type'] = 'application/json'
 
     create: (attrs) ->
-      new @service(task: attrs).$save()
+      new @service(task: attrs).$save (task) ->
+        attrs.id = task.id
+      attrs
 
     update: (task, attrs) ->
       new @service(task: attrs).$update({id: task.id})
