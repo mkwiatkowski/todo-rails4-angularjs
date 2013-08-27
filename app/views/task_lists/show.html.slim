@@ -16,3 +16,6 @@
         calendar(model="task.due_date" on-change="dueDatePicked(task)")
           button.btn.btn-info.btn-xs.pull-right(type="button")
             span.glyphicon.glyphicon-time
+      .task-due-date(ng-show="task.due_date")
+        small
+          ' Due date: {{task.due_date}}
