@@ -29,3 +29,26 @@ h3 Technologies used
       li= link_to "acts_as_list 0.3.0", "https://github.com/swanandp/acts_as_list"
       li= link_to "Rspec 2.14", "http://rspec.info/"
       li= link_to "factory_girl 4.2.0", "https://github.com/thoughtbot/factory_girl"
+
+h3 API
+
+p Log in with email and password using HTTP Basic Auth. Auth token will be returned that should be used in all consecutive requests.
+pre curl #{request.url}api/session -d '' -u EMAIL:PASSWORD
+
+p List all task lists of a user.
+pre curl #{request.url}api/task_lists?auth_token=TOKEN
+
+p List all tasks in a given list.
+pre curl #{request.url}api/task_lists/TASK_LIST_ID/tasks?auth_token=TOKEN
+
+p Create a new task in a given list.
+pre curl #{request.url}api/task_lists/TASK_LIST_ID/tasks?auth_token=TOKEN -d '{"task": {"description": "Task from API"}}' -H 'Content-Type: application/json'
+
+p Update given task.
+pre curl #{request.url}api/task_lists/TASK_LIST_ID/tasks/TASK_ID?auth_token=TOKEN -d '{"task": {"description": "New description from API"}}' -H 'Content-Type: application/json' -X PATCH
+
+p Remove given task.
+pre curl #{request.url}api/task_lists/TASK_LIST_ID/tasks/TASK_ID?auth_token=TOKEN -X DELETE
+
+p Log out. After this action, given auth token will no longer be valid.
+pre curl #{request.url}api/session?auth_token=TOKEN -X DELETE
