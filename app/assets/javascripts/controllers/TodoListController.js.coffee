@@ -20,3 +20,16 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
 
   $scope.dueDatePicked = (task) ->
     @taskService.update(task, due_date: task.due_date)
+
+  $scope.priorityChanged = (task) ->
+    @taskService.update(task, target_priority: task.priority)
+
+  $scope.sortableOptions =
+    update: (e, ui) ->
+      domIndexOf = (e) -> e.siblings().andSelf().index(e)
+      newPriority = domIndexOf(ui.item) + 1
+
+      task = ui.item.scope().task
+      task.priority = newPriority
+
+      $scope.priorityChanged(task)

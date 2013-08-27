@@ -27,6 +27,8 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    acts_as_list (0.3.0)
+      activerecord (>= 3.0)
     arel (4.0.0)
     atomic (1.1.13)
     bcrypt-ruby (3.1.1)
@@ -146,6 +148,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  acts_as_list
   coffee-rails (~> 4.0.0)
   devise
   factory_girl

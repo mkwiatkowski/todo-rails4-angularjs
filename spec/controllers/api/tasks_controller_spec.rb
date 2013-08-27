@@ -17,9 +17,9 @@ describe Api::TasksController do
         get :index, task_list_id: task_list.id
         json_response.should == [
           {'id' => task1.id, 'description' => task1.description,
-            'priority' => nil, 'due_date' => nil, 'completed' => false},
+            'priority' => 1, 'due_date' => nil, 'completed' => false},
           {'id' => task2.id, 'description' => task2.description,
-            'priority' => nil, 'due_date' => nil, 'completed' => false}
+            'priority' => 2, 'due_date' => nil, 'completed' => false}
         ]
       end
 
@@ -59,7 +59,14 @@ describe Api::TasksController do
         json_response["completed"].should == false
         json_response["description"].should == "New task"
         json_response["due_date"].should == nil
-        json_response["priority"].should == nil
+      end
+
+      it "should put the new task on top of the list" do
+        t1, t2 = task1, task2
+        post_create
+        json_response["priority"].should == 1
+        t1.reload.priority.should == 2
+        t2.reload.priority.should == 3
       end
 
       it "should preserve passed parameters" do
@@ -96,13 +103,13 @@ describe Api::TasksController do
     describe "#update" do
       let(:patch_update) do
         patch :update, task_list_id: task_list.id, id: task1.id,
-          task: {description: "New description", priority: 1, completed: true}
+          task: {description: "New description", target_priority: 2, completed: true}
       end
 
       it "should update passed parameters of the given task" do
         patch_update
         task1.reload.description.should == "New description"
-        task1.priority.should == 1
+        task1.priority.should == 2
         task1.completed.should be_true
       end
 
@@ -114,14 +121,14 @@ describe Api::TasksController do
       it "should raise RecordNotFound when trying to update non-existent task" do
         expect {
           patch :update, task_list_id: task_list.id, id: 0,
-            task: {description: "New description", priority: 1, completed: true}
+            task: {description: "New description"}
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it "should return HTTP 401 Unauthorized when trying to update task of another user" do
         other_task = create(:task)
         patch :update, task_list_id: other_task.list.id, id: other_task.id,
-          task: {description: "New description", priority: 1, completed: true}
+          task: {description: "New description"}
         response.status.should == 401
         json_response.should == {'error' => 'unauthorized'}
       end

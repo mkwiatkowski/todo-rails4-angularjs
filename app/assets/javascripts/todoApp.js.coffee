@@ -1,4 +1,4 @@
-todoApp = angular.module('todoApp', ['ngResource', 'mk.editablespan'])
+todoApp = angular.module('todoApp', ['ngResource', 'mk.editablespan', 'ui.sortable'])
 
 todoApp.config ($httpProvider) ->
   authToken = $("meta[name=\"csrf-token\"]").attr("content")

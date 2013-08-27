@@ -32,6 +32,7 @@ gem 'devise'
 gem 'slim'
 gem 'active_model_serializers'
 gem 'jquery-ui-rails'
+gem 'acts_as_list'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -13,5 +13,13 @@ describe TaskList do
     it "should have an empty list of tasks" do
       task_list.tasks.should == []
     end
+
+    it "should order tasks by priority" do
+      # New tasks go to the top, LIFO.
+      t3 = create(:task, list: task_list)
+      t2 = create(:task, list: task_list)
+      t1 = create(:task, list: task_list)
+      task_list.tasks.should == [t1.reload, t2.reload, t3.reload]
+    end
   end
 end
