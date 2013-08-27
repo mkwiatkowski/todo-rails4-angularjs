@@ -43,4 +43,5 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.include Devise::TestHelpers, :type => :controller
+  config.include JsonApiHelpers, :type => :controller
 end

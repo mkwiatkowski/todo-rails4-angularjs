@@ -16,10 +16,10 @@ describe Api::TaskListsController do
       end
 
       it "should return error json with 401 HTTP status when not authenticated" do
-        get :index
-        tasks = JSON.parse(response.body)
-        tasks.should == {'error' => 'unauthorized'}
+        get :index, format: :json
         response.status.should == 401
+        tasks = JSON.parse(response.body)
+        tasks.should == {'error' => 'You need to sign in or sign up before continuing.'}
       end
     end
   end
