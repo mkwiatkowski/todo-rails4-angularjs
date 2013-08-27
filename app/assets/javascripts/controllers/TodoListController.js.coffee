@@ -1,4 +1,4 @@
-angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
+angular.module('todoApp').controller "TodoListController", ($scope, $timeout, Task) ->
   $scope.sortMethod = 'priority'
   $scope.sortableEnabled = true
 
@@ -7,11 +7,14 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
     $scope.tasks = @taskService.all()
 
   $scope.addTask = ->
+    raisePriorities()
     task = @taskService.create(description: $scope.taskDescription)
+    task.priority = 1
     $scope.tasks.unshift(task)
     $scope.taskDescription = ""
 
   $scope.deleteTask = (task) ->
+    lowerPrioritiesBelow(task)
     @taskService.delete(task)
     $scope.tasks.splice($scope.tasks.indexOf(task), 1)
 
@@ -26,6 +29,7 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
 
   $scope.priorityChanged = (task) ->
     @taskService.update(task, target_priority: task.priority)
+    updatePriorities()
 
   $scope.sortableOptions =
     update: (e, ui) ->
@@ -49,3 +53,20 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
 
   serverErrorHandler = ->
     alert("There was a server error, please reload the page and try again.")
+
+  updatePriorities = ->
+    # During reordering it's simplest to just mirror priorities based on task
+    # positions in the list.
+    $timeout ->
+      angular.forEach $scope.tasks, (task, index) ->
+        task.priority = index + 1
+
+  raisePriorities = ->
+    angular.forEach $scope.tasks, (t) -> t.priority += 1
+
+  lowerPrioritiesBelow = (task) ->
+    angular.forEach tasksBelow(task), (t) ->
+      t.priority -= 1
+
+  tasksBelow = (task) ->
+    $scope.tasks.slice($scope.tasks.indexOf(task), $scope.tasks.length)

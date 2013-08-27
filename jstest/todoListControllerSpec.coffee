@@ -31,10 +31,10 @@ describe 'TodoListController', ->
       it 'should add new task to the begining of the tasks list', ->
         @scope.taskDescription = "Another Task"
         @scope.addTask()
-        expect(@scope.tasks).toEqual([{description: "Another Task"}])
+        expect(@scope.tasks).toEqual([{description: "Another Task", priority: 1}])
 
       it 'should pass new task to taskService.create', ->
-        spyOn(Task.prototype, 'create')
+        spyOn(Task.prototype, 'create').andReturn({})
         @scope.taskDescription = "One more thing"
         @scope.addTask()
         expect(Task.prototype.create).toHaveBeenCalledWith(description: "One more thing")
