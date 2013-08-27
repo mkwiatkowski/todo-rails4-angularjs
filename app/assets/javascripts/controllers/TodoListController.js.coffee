@@ -1,4 +1,7 @@
 angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
+  $scope.sortMethod = 'priority'
+  $scope.sortableEnabled = true
+
   $scope.init = (taskListId) ->
     @taskService = new Task(taskListId)
     $scope.tasks = @taskService.all()
@@ -33,3 +36,19 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
       task.priority = newPriority
 
       $scope.priorityChanged(task)
+
+  $scope.changeSortMethod = (sortMethod) ->
+    $scope.sortMethod = sortMethod
+    if sortMethod == 'priority'
+      enableSortable()
+    else
+      disableSortable()
+
+  $scope.dueDateNullLast = (task) ->
+    task.due_date ? '2999-12-31'
+
+  enableSortable = ->
+    $scope.sortableEnabled = true
+
+  disableSortable = ->
+    $scope.sortableEnabled = false
