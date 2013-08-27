@@ -17,3 +17,6 @@ angular.module('todoApp').controller "TodoListController", ($scope, Task) ->
 
   $scope.taskEdited = (task) ->
     @taskService.update(task, description: task.description)
+
+  $scope.dueDatePicked = (task) ->
+    @taskService.update(task, due_date: task.due_date)

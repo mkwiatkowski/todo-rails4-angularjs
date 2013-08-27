@@ -125,6 +125,12 @@ describe Api::TasksController do
         response.status.should == 401
         json_response.should == {'error' => 'unauthorized'}
       end
+
+      it "should accept unix timestamps as value of due_date" do
+        patch :update, task_list_id: task_list.id, id: task1.id,
+          task: {due_date: '2009-02-14'}
+        task1.reload.due_date.should == Date.new(2009, 2, 14)
+      end
     end
 
     describe "#destroy" do
