@@ -23,36 +23,42 @@ form#new_task
     border-bottom-left-radius: 0
     border-bottom-right-radius: 0
 
-.list-group-item:first-child
-  border-top-left-radius: 0
-  border-top-right-radius: 0
+.list-group-item
+  &:first-child
+    border-top-left-radius: 0
+    border-top-right-radius: 0
 
-.list-group-item.completed .task-description span
-  color: #a9a9a9
-  text-decoration: line-through
+  &.draggable
+    cursor: move
 
-.task-description
-  &, div, form, input
-    display: inline
-  input
-    margin-left: 10px
-    width: 80%
-  span
-    padding: 10px
-    line-height: 2.45em
+  &.completed
+    .task-description span
+      color: #a9a9a9
+      text-decoration: line-through
 
-.task-buttons
-  margin-top: 5px
-  .calendar-button
+  .task-description
+    cursor: text
+    &, div, form, input
+      display: inline
+    input
+      margin-left: 10px
+      width: 80%
+    span
+      padding: 10px
+      line-height: 2.45em
+
+  .task-buttons
+    margin-top: 5px
+    .calendar-button
+      display: inline-block
+      button
+        margin-right: 10px
+
+  .task-completed
     display: inline-block
-    button
-      margin-right: 10px
+    vertical-align: top
+    margin-top: 7px
 
-.task-completed
-  display: inline-block
-  vertical-align: top
-  margin-top: 7px
-
-.task-due-date
-  line-height: 1
-  color: #a9a9a9
+  .task-due-date
+    line-height: 1
+    color: #a9a9a9
