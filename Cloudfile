@@ -1,0 +1,12 @@
+todo-rails4-angularjs:
+  ruby_version: 2.0.0
+  environment: production
+  monitoring_email: michal@trivas.pl
+  domains:
+    - todo-rails4-angularjs.shellyapp.com
+  servers:
+    app1:
+      size: large
+      thin: 4
+      databases:
+        - postgresql
