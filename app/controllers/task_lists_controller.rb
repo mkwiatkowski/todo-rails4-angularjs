@@ -5,4 +5,8 @@ class TaskListsController < ApplicationController
     @task_list = TaskList.find(params[:id])
     permission_denied if @task_list.owner != current_user
   end
+
+  def index
+    @task_lists = current_user.task_lists
+  end
 end

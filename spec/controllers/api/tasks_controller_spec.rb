@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Api::TasksController do
   context "for a logged-in user with two tasks" do
     let(:user) { create(:user) }
-    let(:task_list) { user.task_list }
+    let(:task_list) { user.task_lists.first }
     let(:task1) { task_list.tasks[0] }
     let(:task2) { task_list.tasks[1] }
 

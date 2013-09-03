@@ -10,7 +10,7 @@ describe Api::TaskListsController do
 
         it "should return json of array of those task lists" do
           get :index
-          json_response.should == [{'id' => user.task_list.id}]
+          json_response.should == [{'id' => user.first_list.id}]
         end
       end
 
