@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   end
 
   def create_task_list
-    task_lists.create!
+    task_lists.create!(name: "My first list")
   end
 
   def first_list

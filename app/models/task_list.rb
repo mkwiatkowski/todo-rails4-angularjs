@@ -3,4 +3,5 @@ class TaskList < ActiveRecord::Base
   has_many :tasks, -> { order :priority }, foreign_key: :list_id
 
   validates :owner, presence: true
+  validates :name, presence: true
 end

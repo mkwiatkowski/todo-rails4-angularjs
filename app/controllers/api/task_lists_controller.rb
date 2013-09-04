@@ -10,7 +10,7 @@ class Api::TaskListsController < Api::BaseController
   end
 
   def create
-    name = params[:list][:name] || "New list"
+    name = params[:list][:name]
     list = TaskList.create(owner_id: current_user.id, name: name)
     render json: list
   end
