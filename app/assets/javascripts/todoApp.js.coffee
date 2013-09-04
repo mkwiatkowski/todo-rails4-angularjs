@@ -6,8 +6,8 @@ todoApp.config ($httpProvider) ->
 
 todoApp.config ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode true
-  $routeProvider.when '/dashboard', templateUrl: '/dashboard.html'      
-  $routeProvider.when '/task_lists/:list_id', templateUrl: '/task_list.html'      
+  $routeProvider.when '/dashboard', templateUrl: '/templates/dashboard.html'      
+  $routeProvider.when '/task_lists/:list_id', templateUrl: '/templates/task_list.html', controller: 'TodoListController'   
 
 # Makes AngularJS work with turbolinks.
 $(document).on 'page:load', ->
