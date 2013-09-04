@@ -1,5 +1,8 @@
 .ng-cloak(ng-init="init()")
-  .sort-links
+  .sort-links    
+    h3.pull-left 
+      ' {{listName}}
+  
     p.text-muted
       ' &nbsp;
       span(ng-show="sortMethod == dueDateNullLast")
