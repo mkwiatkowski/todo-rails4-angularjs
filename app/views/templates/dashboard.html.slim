@@ -1,5 +1,9 @@
-p
-  = link_to "First list", "/task_lists/1"
-  br
-  = link_to "Second list", "/task_lists/2"
-  br
+.ng-cloak(ng-init="init()")
+  p Your lists:
+  p(ng-repeat="list in lists")
+    a(href="/task_lists/{{list.id}}") List {{list.id}} 
+    ' | 
+    a(href="#" ng-click="deleteList(list, $index)") Delete
+  br 
+  p
+    a(href="#" ng-click="createList()") Create new list
