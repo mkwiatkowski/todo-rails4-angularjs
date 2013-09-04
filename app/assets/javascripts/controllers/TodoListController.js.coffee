@@ -1,10 +1,12 @@
-angular.module('todoApp').controller "TodoListController", ($scope, $timeout, $routeParams, Task) ->
+angular.module('todoApp').controller "TodoListController", ($scope, $timeout, $routeParams, Task, TaskList) ->
   $scope.sortMethod = 'priority'
   $scope.sortableEnabled = true
 
   $scope.init = () ->
     @taskService = new Task($routeParams.list_id, serverErrorHandler)
-    $scope.tasks = @taskService.all()
+    @listService = new TaskList()
+    @listService.find $routeParams.list_id, (list) ->
+      $scope.tasks = list.tasks
 
   $scope.addTask = ->
     raisePriorities()
