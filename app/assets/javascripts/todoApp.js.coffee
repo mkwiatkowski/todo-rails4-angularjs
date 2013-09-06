@@ -6,6 +6,7 @@ todoApp.config ($httpProvider) ->
 
 todoApp.config ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode true
+  $routeProvider.when '/', redirectTo: '/dashboard'
   $routeProvider.when '/dashboard', templateUrl: '/templates/dashboard.html', controller: 'DashboardController'
   $routeProvider.when '/task_lists/:list_id', templateUrl: '/templates/task_list.html', controller: 'TodoListController'   
 

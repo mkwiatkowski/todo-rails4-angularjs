@@ -69,11 +69,6 @@ describe Api::TasksController do
         t2.reload.priority.should == 3
       end
 
-      it "should preserve passed parameters" do
-        post_create
-        Task.order(:id).last.description.should == "New task"
-      end
-
       it "should raise ParameterMissing exception when task param is missing" do
         expect {
           post :create, task_list_id: task_list.id
