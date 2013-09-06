@@ -9,5 +9,8 @@ angular.module('todoApp').controller "DashboardController", ($scope, $routeParam
         $location.url("/task_lists/#{list.id}")
 
   $scope.deleteList = (list, index) ->
-    listsService.delete list
-    $scope.lists.splice index, 1
+    result = confirm "Are you sure you want to remove this list?" 
+
+    if result
+      listsService.delete list
+      $scope.lists.splice index, 1
