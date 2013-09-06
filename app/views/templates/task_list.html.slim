@@ -11,10 +11,10 @@
       ' |
       a(href="" ng-class="{active: sortMethod == dueDateNullLast}" ng-click="changeSortMethod(dueDateNullLast)")
         ' due date
-  div.panel.panel-info
-    div.panel-heading 
-      h4 
-        ' {{listName}}
+  div.panel.panel-info.task-list
+    div.panel-heading     
+      editablespan(model="listName" on-ready="listNameEdited(listName)" input-class="form-control" span-class="list-name")
+
     form#new_task(ng-submit="addTask()")
       .input-group
         input#taskDescription.form-control.input-lg(type="text" autofocus="autofocus" placeholder="Task description" maxlength="255" ng-model="taskDescription" data-non-blank)

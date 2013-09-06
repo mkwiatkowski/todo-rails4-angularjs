@@ -5,9 +5,10 @@ angular.module('todoApp').controller "TodoListController", ($scope, $timeout, $r
   $scope.init = () ->
     @taskService = new Task($routeParams.list_id, serverErrorHandler)
     @listService = new TaskList()
-    @listService.find $routeParams.list_id, (list) ->
+    @list = @listService.find $routeParams.list_id, (list) ->
       $scope.tasks = list.tasks
       $scope.listName = list.name
+      list
 
   $scope.addTask = ->
     raisePriorities()
@@ -23,6 +24,9 @@ angular.module('todoApp').controller "TodoListController", ($scope, $timeout, $r
 
   $scope.toggleTask = (task) ->
     @taskService.update(task, completed: task.completed)
+
+  $scope.listNameEdited = (listName) ->
+    @listService.update(@list, name: listName)
 
   $scope.taskEdited = (task) ->
     @taskService.update(task, description: task.description)

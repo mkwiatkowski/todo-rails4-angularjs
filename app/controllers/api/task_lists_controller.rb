@@ -1,5 +1,5 @@
 class Api::TaskListsController < Api::BaseController
-  before_action :check_owner, only: [:show, :destroy]
+  before_action :check_owner, only: [:show, :update, :destroy]
 
   def index
     render json: current_user.task_lists
@@ -12,6 +12,11 @@ class Api::TaskListsController < Api::BaseController
   def create
     list = current_user.task_lists.create!(safe_params)
     render json: list
+  end
+
+  def update
+    task_list.update_attributes(safe_params)
+    render nothing: true
   end
 
   def destroy

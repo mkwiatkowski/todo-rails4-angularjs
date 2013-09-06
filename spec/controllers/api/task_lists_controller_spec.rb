@@ -77,6 +77,47 @@ describe Api::TaskListsController do
       end
     end
 
+    describe '#update' do
+      let(:patch_update) do
+        patch :update, id: first_list.id, list: {name: "Updated list"}, format: :json
+      end
+      
+      context "when authenticated as that user" do
+        before { sign_in(user) }      
+        
+        it "should update passed parameters of the given list" do
+          patch_update
+          first_list.reload.name.should == "Updated list"          
+        end
+
+        it "should return 200 OK" do
+          patch_update
+          response.should be_success
+        end
+
+        it "should raise RecordNotFound when trying to update non-existent task" do
+          expect {
+            patch :update, id: 0,
+              list: {name: "Irrelevant name"}
+          }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+
+        it "should return HTTP 401 Unauthorized when trying to get a list of a another user" do
+          patch :update, id: other_list.id, format: :json
+          response.status.should == 401
+          json_response.should == {'error' => 'unauthorized'}
+        end
+      end
+
+      context "when not authenticated as that user" do
+        it "should return error json with 401 HTTP status" do
+          patch :update, id: first_list.id, format: :json
+          response.status.should == 401
+          json_response.should == {'error' => 'You need to sign in or sign up before continuing.'}
+        end      
+      end   
+    end
+
     describe "#show" do
       context "when authenticated as that user" do
         before { sign_in(user) }
