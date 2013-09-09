@@ -19,7 +19,7 @@ angular.module('todoApp').factory 'TaskList', ($resource, $http) ->
 
     update: (list, attrs) ->
       new @service(list: attrs).$update {id: list.id}, (-> null), @errorHandler
-
+      
     all: ->
       @service.query((-> null), @errorHandler)
 

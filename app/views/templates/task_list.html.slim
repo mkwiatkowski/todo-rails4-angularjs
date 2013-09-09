@@ -13,15 +13,15 @@
         ' due date
   div.panel.panel-info.task-list
     div.panel-heading     
-      editablespan(model="listName" on-ready="listNameEdited(listName)" input-class="form-control" span-class="list-name")
+      editablespan(model="list.name" on-ready="listNameEdited(list.name)" input-class="form-control" span-class="list-name")
 
     form#new_task(ng-submit="addTask()")
       .input-group
         input#taskDescription.form-control.input-lg(type="text" autofocus="autofocus" placeholder="Task description" maxlength="255" ng-model="taskDescription" data-non-blank)
         span.input-group-btn
           button.btn.btn-primary.btn-lg(type="submit") add
-    ul.list-group(ui-sortable="sortableOptions" ng-model="tasks" ui-sortable-ext="sortableEnabled")
-      li.list-group-item(ng-repeat="task in tasks | orderBy:sortMethod" ng-class="{completed: task.completed, draggable: sortMethod == 'priority'}")
+    ul.list-group(ui-sortable="sortableOptions" ng-model="list.tasks" ui-sortable-ext="sortableEnabled")
+      li.list-group-item(ng-repeat="task in list.tasks | orderBy:sortMethod" ng-class="{completed: task.completed, draggable: sortMethod == 'priority'}")
         .task-completed
           input(type="checkbox" ng-model="task.completed" ng-change="toggleTask(task)")
         .task-description
