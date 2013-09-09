@@ -40,6 +40,15 @@ pre curl #{request.url}api/session -d '' -u EMAIL:PASSWORD
 p List all task lists of a user.
 pre curl #{request.url}api/task_lists?auth_token=TOKEN
 
+p Create a new list
+pre curl #{request.url}api/task_lists?auth_token=TOKEN -d '{"list": {"name": "New List from API"}}' -H 'Content-Type: application/json'
+
+p Update given list
+pre curl #{request.url}api/task_lists/TASK_LIST_ID?auth_token=TOKEN -d '{"list": {"name": "New name from API"}}' -H 'Content-Type: application/json' -X PATCH
+
+p Remove given list
+pre curl #{request.url}api/task_lists/TASK_LIST_ID?auth_token=TOKEN -X DELETE
+
 p List all tasks in a given list.
 pre curl #{request.url}api/task_lists/TASK_LIST_ID/tasks?auth_token=TOKEN
 
