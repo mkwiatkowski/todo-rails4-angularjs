@@ -4,6 +4,8 @@ This is a todo list management application, written in Rails 4 and AngularJS. Ta
 
 Check out the demo at [todo-rails4-angularjs](http://todo-rails4-angularjs.shellyapp.com/).
 
+I did a presentation about this integration at Ruby User Group in Sopot on September 18th. Check out [the slides](http://mkwiatkowski.github.io/angularjs-rails4-trug-presentation/).
+
 ## Technologies used
 
 ### Frontend
