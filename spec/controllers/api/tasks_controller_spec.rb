@@ -83,7 +83,7 @@ describe Api::TasksController do
       it "should ignore unknown parameters" do
         post :create, task_list_id: task_list.id,
           task: {description: "New task", foobar: 1234}
-        response.should be_ok
+        response.status.should == 201
       end
 
       it "should raise a validation error when description is too long" do
