@@ -1,0 +1,22 @@
+.ng-cloak(ng-init="init()")
+
+  div.panel.panel-default.dashboard-list
+    div.panel-heading 
+      h4 Your lists
+    ul.list-group(ng-show="lists == 0")
+      li.list-group-item
+        ' You haven't created any lists yet.      
+    ul.list-group
+      li.list-group-item(ng-repeat="list in lists")
+        button.btn.btn-danger.btn-xs.pull-right(type="button" ng-click="deleteList(list, $index)")
+          span.glyphicon.glyphicon-ban-circle        
+        a(href="/task_lists/{{list.id}}") 
+          ' {{list.name}} ({{list.tasks.length}})      
+
+  form#new_list(ng-submit="createList(listName)")
+    .input-group
+      input#taskDescription.form-control.input-lg(type="text" autofocus="autofocus" placeholder="List name" maxlength="255" ng-model="listName" data-non-blank)
+      span.input-group-btn
+        button.btn.btn-primary.btn-lg(type="submit") create list
+
+  

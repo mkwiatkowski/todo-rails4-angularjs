@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130826171120) do
+ActiveRecord::Schema.define(version: 20130904153446) do
 
   create_table "task_lists", force: true do |t|
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "task_lists", ["owner_id"], name: "index_task_lists_on_owner_id", using: :btree
