@@ -1,0 +1,37 @@
+.ng-cloak(ng-init="init()")
+  .sort-links        
+    p.text-muted
+      ' &nbsp;
+      span(ng-show="sortMethod == dueDateNullLast")
+        ' Note: Rearranging tasks is disabled when sorting by due date.
+    p
+      ' sort by:
+      a(href="" ng-class="{active: sortMethod == 'priority'}" ng-click="changeSortMethod('priority')")
+        ' priority
+      ' |
+      a(href="" ng-class="{active: sortMethod == dueDateNullLast}" ng-click="changeSortMethod(dueDateNullLast)")
+        ' due date
+  div.panel.panel-info.task-list
+    div.panel-heading     
+      editablespan(model="list.name" on-ready="listNameEdited(list.name)" input-class="form-control" span-class="list-name")
+
+    form#new_task(ng-submit="addTask()")
+      .input-group
+        input#taskDescription.form-control.input-lg(type="text" autofocus="autofocus" placeholder="Task description" maxlength="255" ng-model="taskDescription" data-non-blank)
+        span.input-group-btn
+          button.btn.btn-primary.btn-lg(type="submit") add
+    ul.list-group(ui-sortable="sortableOptions" ng-model="list.tasks" ui-sortable-ext="sortableEnabled")
+      li.list-group-item(ng-repeat="task in list.tasks | orderBy:sortMethod" ng-class="{completed: task.completed, draggable: sortMethod == 'priority'}")
+        .task-completed
+          input(type="checkbox" ng-model="task.completed" ng-change="toggleTask(task)")
+        .task-description
+          editablespan(model="task.description" on-ready="taskEdited(task)" input-class="form-control")
+        .task-buttons.pull-right
+          button.btn.btn-danger.btn-xs.pull-right(type="button" ng-click="deleteTask(task)")
+            span.glyphicon.glyphicon-ban-circle
+          calendar(model="task.due_date" on-change="dueDatePicked(task)")
+            button.btn.btn-info.btn-xs.pull-right(type="button")
+              span.glyphicon.glyphicon-time
+        .task-due-date(ng-show="task.due_date")
+          small
+            ' Due date: {{task.due_date}}    

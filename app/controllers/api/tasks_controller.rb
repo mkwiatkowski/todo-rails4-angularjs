@@ -34,6 +34,6 @@ class Api::TasksController < Api::BaseController
   end
 
   def check_owner
-    permission_denied if current_user.task_list != task_list
+    permission_denied if current_user != task_list.owner
   end
 end

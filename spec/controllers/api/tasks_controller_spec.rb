@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Api::TasksController do
   context "for a logged-in user with two tasks" do
     let(:user) { create(:user) }
-    let(:task_list) { user.task_list }
+    let(:task_list) { user.task_lists.first }
     let(:task1) { task_list.tasks[0] }
     let(:task2) { task_list.tasks[1] }
 
@@ -67,11 +67,6 @@ describe Api::TasksController do
         json_response["priority"].should == 1
         t1.reload.priority.should == 2
         t2.reload.priority.should == 3
-      end
-
-      it "should preserve passed parameters" do
-        post_create
-        Task.order(:id).last.description.should == "New task"
       end
 
       it "should raise ParameterMissing exception when task param is missing" do
