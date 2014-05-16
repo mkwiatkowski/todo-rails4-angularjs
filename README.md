@@ -11,7 +11,7 @@ I wrote [an article that summarizes all the lessons learned during writing of th
 ### Frontend
 
  - [Bootstrap 3.0.0](http://getbootstrap.com/)
- - [AngularJS 1.0.8](http://angularjs.org/)
+ - [AngularJS 1.2.16](http://angularjs.org/)
  - [jQuery 1.10.2](http://jquery.com/)
  - [jQuery UI 1.10.3](http://jqueryui.com/)
  - [CoffeeScript 1.6.3](http://coffeescript.org/)
