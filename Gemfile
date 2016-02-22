@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby "2.0.0"
+ruby "2.2.4"
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.13'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
@@ -13,7 +13,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'devise', '~> 3.0.4'
 gem 'slim'
 gem 'active_model_serializers'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '= 4.0.3'
 gem 'acts_as_list'
 
 group :doc do
