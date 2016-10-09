@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HomeController do
+describe HomeController, :type => :controller do
   let(:user) { create(:user) }
 
   describe "#index" do

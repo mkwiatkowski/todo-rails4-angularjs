@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TemplatesController do
+describe TemplatesController, :type => :controller do
   
   describe "#index" do
 
