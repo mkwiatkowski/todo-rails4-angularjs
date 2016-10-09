@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::TasksController do
+describe Api::TasksController, :type => :controller do
   context "for a logged-in user with two tasks" do
     let(:user) { create(:user) }
     let(:task_list) { user.task_lists.first }
@@ -55,7 +55,7 @@ describe Api::TasksController do
 
       it "should return json of the just created record" do
         post_create
-        json_response["id"].should == be_an(Integer)
+        expect(json_response["id"]).to be_a_kind_of(Integer)  
         json_response["completed"].should == false
         json_response["description"].should == "New task"
         json_response["due_date"].should == nil
@@ -105,7 +105,7 @@ describe Api::TasksController do
         patch_update
         task1.reload.description.should == "New description"
         task1.priority.should == 2
-        task1.completed.should be_true
+        task1.completed.should be_truthy
       end
 
       it "should return 200 OK" do

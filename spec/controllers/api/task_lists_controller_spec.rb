@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::TaskListsController do
+describe Api::TaskListsController, :type => :controller do
   context "for user that has two task lists" do
     let(:user) { create(:user) }
     let(:first_list) { user.first_list }
@@ -52,7 +52,7 @@ describe Api::TaskListsController do
 
         it "should return json of the just created record" do
           post_create
-          json_response["id"].should == be_an(Integer)
+          expect(json_response["id"]).to be_a_kind_of(Integer)  
           json_response["name"].should == "My new list"          
         end
 
